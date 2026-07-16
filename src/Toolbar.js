@@ -44,19 +44,26 @@ export class Toolbar {
       document.documentElement.style.setProperty("--stroke-color", e.target.value);
     });
 
-    const handBtn = document.createElement("button");
-    handBtn.classList.add("toolbar-button");
-    handBtn.dataset.inputMode = INPUT_MODES.HAND;
-    if (state.inputMode == INPUT_MODES.HAND){
-      handBtn.classList.add("active");
-    }
-    handBtn.addEventListener("click", () => {
-      state.inputMode = INPUT_MODES.HAND;
-      handBtn.classList.toggle("active", true);
+    const selectionOptions = [
+      {
+        icon: "/hand.svg",
+        label: "",
+        value: INPUT_MODES.HAND
+      },
+    ]
+    const selectionSelect = new ToolSelect(selectionOptions);
+    selectionSelect.root.dataset.inputMode = selectionSelect.value;
+    selectionSelect.root.addEventListener("selected", (e) => {
+      state.inputMode = e.detail.value;
+      selectionSelect.root.dataset.inputMode = e.detail.value;
+      selectionSelect.root.classList.toggle("active", true);
+    });
+
+    selectionSelect.root.addEventListener("change", (e) => {
+      state.inputMode = e.detail.value;
+      selectionSelect.root.dataset.inputMode = e.detail.value;
+      selectionSelect.root.classList.toggle("active", true);
     })
-    const handSVG = document.createElement("img");
-    handSVG.src = "/hand.svg";
-    handBtn.append(handSVG);
 
     const shapeOptions = [
       {
@@ -84,7 +91,7 @@ export class Toolbar {
       shapeSelect.root.classList.toggle("active", true);
     })
 
-    this.el.append(fillColor, strokeColor, handBtn, shapeSelect.root);
+    this.el.append(fillColor, strokeColor, selectionSelect.root, shapeSelect.root);
 
     state.subscribe("inputMode", () => {
       Array.from(this.el.children).forEach(c => {
