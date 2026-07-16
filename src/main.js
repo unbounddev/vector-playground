@@ -1,6 +1,7 @@
 import './style.css'
 import { reactiveStore } from './utils';
 import { SVGPanel } from './SVGPanel';
+import { Toolbar } from './Toolbar';
 // Required for exported svg
 // <?xml version="1.0" encoding="utf-8"?>
 // <svg xmlns="http://www.w3.org/2000/svg"
@@ -58,4 +59,5 @@ function createSVGForm(panel, el){
 
 const tree = new SVGTree()
 const propPanel = new PropertiesPanel(selectedElement);
+const toolbar = new Toolbar(svgContainer);
 

@@ -1,6 +1,12 @@
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --toolbar-bg: white;
+  --fill-color: black;
+  --stroke-color: black;
 }
 
 body {
@@ -23,6 +29,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .svgPanel {
@@ -31,3 +38,73 @@ body {
     height: 100%;
     background-color: white;
 }
+
+.toolbar-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: max-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.toolbar {
+  background-color: var(--toolbar-bg);
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  margin: 16px;
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.02),
+    0 10px 20px rgba(0, 0, 0, 0.04),
+    0 20px 40px rgba(0, 0, 0, 0.04);
+  border: none;
+  border-radius: 5px;
+}
+
+.color-picker {
+  width: 50px;
+  height: 50px;
+  border: 2px solid rgb(240, 240, 240);
+  border-radius: 5px;
+  background-color: var(--fill-color);
+  cursor: pointer;
+  position: relative;
+}
+
+.color-picker-stroke {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--toolbar-bg);
+}
+
+.color-picker:has(.color-picker-stroke) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--stroke-color);
+}
+
+.color-picker > input {
+  position: absolute;
+  /* Adjust these coordinates to change where the popup spawns */
+  top: 0;
+  left: 0;
+  
+  /* Shrink to a tiny point so it does not interfere with the UI */
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: none;
+  
+  /* Make it completely invisible */
+  opacity: 0;
+  pointer-events: none;
+}
+
