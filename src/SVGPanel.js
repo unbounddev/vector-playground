@@ -40,10 +40,14 @@ export class SVGPanel {
     handlePointerDown(e) {
         let startX = e.clientX;
         let startY = e.clientY;
+        let fillColor = document.documentElement.style.getPropertyValue("--fill-color");
+        let strokeColor = document.documentElement.style.getPropertyValue("--stroke-color");
+        fillColor = fillColor ? fillColor : "none";
+        strokeColor = strokeColor ? strokeColor : "none";
         
         let rect = document.createElementNS(SVG_NS, "rect")
-        rect.setAttribute("stroke", "black")
-        rect.setAttribute("fill", "transparent")
+        rect.setAttribute("stroke", strokeColor == "none" & fillColor == "none" ? "black" : strokeColor)
+        rect.setAttribute("fill", fillColor)
         rect.setAttribute("x", `${startX}`)
         rect.setAttribute("y", `${startY}`)
         this.el.append(rect)
@@ -70,8 +74,9 @@ export class SVGPanel {
         }
 
         function onPointerUp(upE){
-            window.removeEventListener('pointermove', onPointerMove)
-            window.removeEventListener('pointerup', onPointerUp)
+            rect.setAttribute("stroke", strokeColor);
+            window.removeEventListener('pointermove', onPointerMove);
+            window.removeEventListener('pointerup', onPointerUp);
         }
         
         window.addEventListener('pointermove', onPointerMove)

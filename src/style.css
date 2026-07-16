@@ -5,8 +5,8 @@
 
 :root {
   --toolbar-bg: white;
-  --fill-color: black;
-  --stroke-color: black;
+  --fill-color: transparent;
+  --stroke-color: transparent;
 }
 
 body {
@@ -79,7 +79,7 @@ body {
 .color-picker-stroke {
   width: 30px;
   height: 30px;
-  border: none;
+  border: 2px solid rgb(240, 240, 240);
   border-radius: 5px;
   background-color: var(--toolbar-bg);
 }
