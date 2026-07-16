@@ -1,4 +1,5 @@
 import { SVG_NS } from "./utils";
+import { state } from "./state";
 
 export class SVGPanel {
     constructor(parent){
@@ -38,6 +39,17 @@ export class SVGPanel {
     }
 
     handlePointerDown(e) {
+        const inputMode = state.inputMode;
+
+        switch (inputMode) {
+            case "rect":
+                this.handleRectInputMode(e);
+                break;
+        }
+        
+    }
+
+    handleRectInputMode(e){
         let startX = e.clientX;
         let startY = e.clientY;
         let fillColor = document.documentElement.style.getPropertyValue("--fill-color");

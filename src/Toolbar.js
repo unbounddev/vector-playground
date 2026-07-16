@@ -1,3 +1,5 @@
+import { state } from "./state";
+
 export class Toolbar {
   constructor(parent){
     this.container = document.createElement('div');
@@ -38,8 +40,24 @@ export class Toolbar {
 
     strokePicker.addEventListener("change", (e) => {
       document.documentElement.style.setProperty("--stroke-color", e.target.value);
+    });
+
+    const handBtn = document.createElement("button");
+    handBtn.classList.add("toolbar-button");
+    if (state.inputMode == "hand"){
+      handBtn.classList.add("active");
+    }
+    handBtn.addEventListener("click", () => {
+      state.inputMode = "hand";
+      handBtn.classList.toggle("active", true);
+      document.documentElement.style.setProperty("--svg-panel-cursor", "pointer");
     })
+    const handSVG = document.createElement("img");
+    handSVG.src = "/hand.svg";
+    handBtn.append(handSVG);
+
     this.el.append(fillColor);
     this.el.append(strokeColor);
+    this.el.append(handBtn);
   }
 }

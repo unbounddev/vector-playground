@@ -1,7 +1,7 @@
 import './style.css'
-import { reactiveStore } from './utils';
 import { SVGPanel } from './SVGPanel';
 import { Toolbar } from './Toolbar';
+import { state } from './state';
 // Required for exported svg
 // <?xml version="1.0" encoding="utf-8"?>
 // <svg xmlns="http://www.w3.org/2000/svg"
@@ -9,8 +9,6 @@ import { Toolbar } from './Toolbar';
 const svgContainer = document.querySelector(".svgContainer");
 const svgPanel = (new SVGPanel(svgContainer)).el;
 const sidebar = document.querySelector(".sidebar");
-
-let selectedElement = reactiveStore({ el: null });
 
 class SVGTree {
     constructor(){
@@ -33,10 +31,10 @@ class SVGTree {
 }
 
 class PropertiesPanel {
-    constructor(el){
+    constructor(){
         this.panel = document.createElement("div");
-        this.el = el;
-        el.subscribe("el", (obj, key) => {
+        
+        state.subscribe("selected", (obj, key) => {
             let selected = obj[key]
 
             if (selected.tagName == "SVG"){
@@ -58,6 +56,6 @@ function createSVGForm(panel, el){
 }
 
 const tree = new SVGTree()
-const propPanel = new PropertiesPanel(selectedElement);
+const propPanel = new PropertiesPanel();
 const toolbar = new Toolbar(svgContainer);
 
