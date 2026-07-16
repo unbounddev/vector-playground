@@ -1,4 +1,6 @@
 import { state } from "./state";
+import { ToolSelect } from "./ToolSelect";
+import { INPUT_MODES } from "./utils";
 
 export class Toolbar {
   constructor(parent){
@@ -44,20 +46,52 @@ export class Toolbar {
 
     const handBtn = document.createElement("button");
     handBtn.classList.add("toolbar-button");
-    if (state.inputMode == "hand"){
+    handBtn.dataset.inputMode = INPUT_MODES.HAND;
+    if (state.inputMode == INPUT_MODES.HAND){
       handBtn.classList.add("active");
     }
     handBtn.addEventListener("click", () => {
-      state.inputMode = "hand";
+      state.inputMode = INPUT_MODES.HAND;
       handBtn.classList.toggle("active", true);
-      document.documentElement.style.setProperty("--svg-panel-cursor", "pointer");
     })
     const handSVG = document.createElement("img");
     handSVG.src = "/hand.svg";
     handBtn.append(handSVG);
 
-    this.el.append(fillColor);
-    this.el.append(strokeColor);
-    this.el.append(handBtn);
+    const shapeOptions = [
+      {
+        icon: "/square.svg",
+        label: "Rectangle",
+        value: INPUT_MODES.RECT
+      },
+      {
+        icon: "/circle.svg",
+        label: "Ellipse",
+        value: INPUT_MODES.ELLIPSE
+      }
+    ]
+    const shapeSelect = new ToolSelect(shapeOptions);
+    shapeSelect.root.dataset.inputMode = shapeSelect.value;
+    shapeSelect.root.addEventListener("selected", (e) => {
+      state.inputMode = e.detail.value;
+      shapeSelect.root.dataset.inputMode = e.detail.value;
+      shapeSelect.root.classList.toggle("active", true);
+    });
+
+    shapeSelect.root.addEventListener("change", (e) => {
+      state.inputMode = e.detail.value;
+      shapeSelect.root.dataset.inputMode = e.detail.value;
+      shapeSelect.root.classList.toggle("active", true);
+    })
+
+    this.el.append(fillColor, strokeColor, handBtn, shapeSelect.root);
+
+    state.subscribe("inputMode", () => {
+      Array.from(this.el.children).forEach(c => {
+          if (c.dataset.inputMode){
+            c.classList.toggle("active", state.inputMode == c.dataset.inputMode)
+          }
+      })
+    })
   }
 }

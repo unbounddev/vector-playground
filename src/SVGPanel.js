@@ -1,4 +1,4 @@
-import { SVG_NS } from "./utils";
+import { INPUT_MODES, SVG_NS } from "./utils";
 import { state } from "./state";
 
 export class SVGPanel {
@@ -42,7 +42,7 @@ export class SVGPanel {
         const inputMode = state.inputMode;
 
         switch (inputMode) {
-            case "rect":
+            case INPUT_MODES.RECT:
                 this.handleRectInputMode(e);
                 break;
         }

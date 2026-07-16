@@ -4,7 +4,10 @@
 }
 
 :root {
-  --toolbar-bg: white;
+  --primary: white;
+  --primary-100: rgb(240, 240, 240);
+  --toolbar-bg: var(--primary);
+  --sidebar-bg: var(--primary-100);
   --fill-color: transparent;
   --stroke-color: transparent;
   --svg-panel-cursor: auto;
@@ -19,7 +22,7 @@ body {
 }
 
 .sidebar {
-    background-color: rgb(240, 240, 240);
+    background-color: var(--sidebar-bg);
     height: 100vh;
     width: max-content;
     min-width: 300px;
@@ -64,14 +67,14 @@ body {
     0 2px 4px rgba(0, 0, 0, 0.02),
     0 10px 20px rgba(0, 0, 0, 0.04),
     0 20px 40px rgba(0, 0, 0, 0.04);
-  border: none;
+  border: 1px solid var(--primary-100);
   border-radius: 5px;
 }
 
 .color-picker {
   width: 36px;
   height: 36px;
-  border: 2px solid rgb(240, 240, 240);
+  border: 2px solid var(--primary-100);
   border-radius: 5px;
   background-color: var(--fill-color);
   cursor: pointer;
@@ -81,7 +84,7 @@ body {
 .color-picker-stroke {
   width: 24px;
   height: 24px;
-  border: 2px solid rgb(240, 240, 240);
+  border: 2px solid var(--primary-100);
   border-radius: 5px;
   background-color: var(--toolbar-bg);
 }
@@ -123,10 +126,100 @@ body {
 }
 
 .toolbar-button.active {
-  background-color: rgb(240, 240, 240);
+  background-color: var(--primary-100);
 }
 
 .toolbar-button:hover {
-  background-color: rgb(240, 240, 240);
+  background-color: var(--primary-100);
 }
+
+.toolselect {
+  display: flex;
+  position: relative;
+}
+
+.toolselect-selected {
+  background-color: var(--toolbar-bg);
+  height: 36px;
+  width: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.toolselect-selected:hover {
+  background-color: var(--primary-100);
+}
+
+.toolselect-more {
+  background-color: var(--toolbar-bg);
+  height: 36px;
+  width: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.toolselect-more:hover {
+  background-color: var(--primary-100);
+}
+
+.toolselect-more > img {
+  width: 12px;
+  height: 12px;
+}
+
+.active > .toolselect-selected {
+  background-color: var(--primary-100);
+}
+
+.toolselect-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(-100%);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--toolbar-bg);
+  padding: 8px;
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.02),
+    0 10px 20px rgba(0, 0, 0, 0.04),
+    0 20px 40px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--primary-100);
+  border-radius: 5px;
+  display: none;
+}
+
+.toolselect-menu.open {
+  display: initial;
+}
+
+.toolselect-menu > button {
+  display: flex;
+  align-items: center;
+  background-color: var(--toolbar-bg);
+  border: none;
+  border-radius: 5px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.toolselect-menu > button:hover {
+  background-color: var(--primary-100);
+}
+
+.toolselect-menu > button > span {
+  margin-left: 4px;
+}
+
+.svgContainer:has([data-input-mode="hand"].active) {
+  --svg-panel-cursor: pointer;
+} 
 
