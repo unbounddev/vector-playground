@@ -93,12 +93,16 @@ export class Toolbar {
 
     this.el.append(fillColor, strokeColor, selectionSelect.root, shapeSelect.root);
 
-    state.subscribe("inputMode", () => {
-      Array.from(this.el.children).forEach(c => {
+    state.subscribe("inputMode", () => this.handleInputModeChange());
+    // set default tool
+    this.handleInputModeChange();
+  }
+
+  handleInputModeChange() {
+    Array.from(this.el.children).forEach(c => {
           if (c.dataset.inputMode){
             c.classList.toggle("active", state.inputMode == c.dataset.inputMode)
           }
       })
-    })
   }
 }

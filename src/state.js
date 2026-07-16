@@ -1,6 +1,6 @@
-import { reactiveStore } from './utils';
+import { INPUT_MODES, reactiveStore } from './utils';
 
 export const state = reactiveStore({ 
     selected: null,
-    inputMode: "rect"
+    inputMode: INPUT_MODES.HAND
 });
