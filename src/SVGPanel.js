@@ -43,13 +43,16 @@ export class SVGPanel {
 
         switch (inputMode) {
             case INPUT_MODES.RECT:
-                this.handleRectInputMode(e);
+                this.handleRect(e);
+                break;
+            case INPUT_MODES.ELLIPSE:
+                this.handleEllipse(e);
                 break;
         }
         
     }
 
-    handleRectInputMode(e){
+    handleRect(e){
         let startX = e.clientX;
         let startY = e.clientY;
         let fillColor = document.documentElement.style.getPropertyValue("--fill-color");
@@ -87,6 +90,43 @@ export class SVGPanel {
 
         function onPointerUp(upE){
             rect.setAttribute("stroke", strokeColor);
+            window.removeEventListener('pointermove', onPointerMove);
+            window.removeEventListener('pointerup', onPointerUp);
+        }
+        
+        window.addEventListener('pointermove', onPointerMove)
+        window.addEventListener('pointerup', onPointerUp)
+    }
+
+    handleEllipse(e){
+        let startX = e.clientX;
+        let startY = e.clientY;
+        let fillColor = document.documentElement.style.getPropertyValue("--fill-color");
+        let strokeColor = document.documentElement.style.getPropertyValue("--stroke-color");
+        fillColor = fillColor ? fillColor : "none";
+        strokeColor = strokeColor ? strokeColor : "none";
+
+        let ellipse = document.createElementNS(SVG_NS, "ellipse")
+        ellipse.setAttribute("stroke", strokeColor == "none" & fillColor == "none" ? "black" : strokeColor)
+        ellipse.setAttribute("fill", fillColor)
+        ellipse.setAttribute("cx", `${startX}`)
+        ellipse.setAttribute("cy", `${startY}`)
+        ellipse.setAttribute("rx", `0`)
+        ellipse.setAttribute("ry", `0`)
+        this.el.append(ellipse)
+
+        function onPointerMove(moveE){
+            let moveX = moveE.clientX;
+            let moveY = moveE.clientY;
+
+            ellipse.setAttribute("cx", `${(startX+moveX)/2}`);
+            ellipse.setAttribute("cy", `${(startY+moveY)/2}`);
+            ellipse.setAttribute("rx", `${Math.abs(moveX-startX)/2}`);
+            ellipse.setAttribute("ry", `${Math.abs(moveY-startY)/2}`);
+        }
+
+        function onPointerUp(upE){
+            ellipse.setAttribute("stroke", strokeColor);
             window.removeEventListener('pointermove', onPointerMove);
             window.removeEventListener('pointerup', onPointerUp);
         }
