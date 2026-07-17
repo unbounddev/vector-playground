@@ -156,8 +156,8 @@ export class SVGPanel {
                     ((moveX-startX)**2)+
                     ((moveY-startY)**2)
                 )
-                ellipse.setAttribute("cx", `${(startX+moveX)/2}`);
-                ellipse.setAttribute("cy", `${(startY+moveY)/2}`);
+                ellipse.setAttribute("cx", `${moveX < startX ? startX-distance/2 : startX+distance/2}`);
+                ellipse.setAttribute("cy", `${moveY < startY ? startY-distance/2 : startY+distance/2}`);
                 ellipse.setAttribute("rx", `${distance/2}`);
                 ellipse.setAttribute("ry", `${distance/2}`);
             } else {
