@@ -11,6 +11,7 @@
   --fill-color: transparent;
   --stroke-color: transparent;
   --svg-panel-cursor: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
@@ -224,4 +225,25 @@ body {
 .svgContainer:has([data-input-mode="hand"].active) {
   --svg-panel-cursor: pointer;
 } 
+
+.layer {
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--sidebar-bg);
+  cursor: pointer;
+}
+
+.layer:hover {
+  background-color: rgb(210, 210, 210);
+}
+
+.layer.active {
+  background-color: rgb(210, 210, 210);
+}
+
+.properties-panel > form {
+  display: flex;
+  flex-direction: column;
+}
 
