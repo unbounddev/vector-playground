@@ -71,21 +71,50 @@ export class SVGPanel {
             let moveX = moveE.clientX;
             let moveY = moveE.clientY;
 
-            if (moveX < startX){
-                rect.setAttribute("x", `${moveX}`)
-                rect.setAttribute("width", `${startX-moveX}`)
-                
+            if (moveE.shiftKey){
+
+                const distance = Math.sqrt(
+                    ((moveX-startX)**2)+
+                    ((moveY-startY)**2)
+                )
+
+                if (moveX < startX){
+                    rect.setAttribute("x", `${startX-(distance/2)}`)
+                    rect.setAttribute("width", `${distance/2}`)
+                    
+                } else {
+                    rect.setAttribute("width", `${distance/2}`)
+                }
+
+                if (moveY < startY){
+                    rect.setAttribute("y", `${startY-(distance/2)}`)
+                    rect.setAttribute("height", `${distance/2}`)
+                    
+                } else {
+                    rect.setAttribute("height", `${distance/2}`)
+                }
+
             } else {
-                rect.setAttribute("width", `${moveX-startX}`)
+
+                if (moveX < startX){
+                    rect.setAttribute("x", `${moveX}`)
+                    rect.setAttribute("width", `${startX-moveX}`)
+                    
+                } else {
+                    rect.setAttribute("width", `${moveX-startX}`)
+                }
+
+                if (moveY < startY){
+                    rect.setAttribute("y", `${moveY}`)
+                    rect.setAttribute("height", `${startY-moveY}`)
+                    
+                } else {
+                    rect.setAttribute("height", `${moveY-startY}`)
+                }
+
             }
 
-            if (moveY < startY){
-                rect.setAttribute("y", `${moveY}`)
-                rect.setAttribute("height", `${startY-moveY}`)
-                
-            } else {
-                rect.setAttribute("height", `${moveY-startY}`)
-            }
+            
         }
 
         function onPointerUp(upE){
