@@ -81,39 +81,17 @@ export class SVGPanel {
                     ((moveY-startY)**2)
                 )
 
-                if (moveX < startX){
-                    rect.setAttribute("x", `${startX-(distance/2)}`)
-                    rect.setAttribute("width", `${distance/2}`)
-                    
-                } else {
-                    rect.setAttribute("width", `${distance/2}`)
-                }
-
-                if (moveY < startY){
-                    rect.setAttribute("y", `${startY-(distance/2)}`)
-                    rect.setAttribute("height", `${distance/2}`)
-                    
-                } else {
-                    rect.setAttribute("height", `${distance/2}`)
-                }
+                rect.setAttribute("x", `${moveX < startX ? startX-(distance/2) : startX}`)
+                rect.setAttribute("width", `${distance/2}`)
+                rect.setAttribute("y", `${moveY < startY ? startY-(distance/2) : startY}`)
+                rect.setAttribute("height", `${distance/2}`)
 
             } else {
 
-                if (moveX < startX){
-                    rect.setAttribute("x", `${moveX}`)
-                    rect.setAttribute("width", `${startX-moveX}`)
-                    
-                } else {
-                    rect.setAttribute("width", `${moveX-startX}`)
-                }
-
-                if (moveY < startY){
-                    rect.setAttribute("y", `${moveY}`)
-                    rect.setAttribute("height", `${startY-moveY}`)
-                    
-                } else {
-                    rect.setAttribute("height", `${moveY-startY}`)
-                }
+                rect.setAttribute("x", `${moveX < startX ? moveX : startX}`)
+                rect.setAttribute("width", `${moveX < startX ? startX-moveX : moveX-startX}`)
+                rect.setAttribute("y", `${moveY < startY ? moveY : startY}`)
+                rect.setAttribute("height", `${moveY < startY ? startY-moveY : moveY-startY}`)
 
             }
 
