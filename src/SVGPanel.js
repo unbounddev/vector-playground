@@ -119,10 +119,21 @@ export class SVGPanel {
             let moveX = moveE.clientX;
             let moveY = moveE.clientY;
 
-            ellipse.setAttribute("cx", `${(startX+moveX)/2}`);
-            ellipse.setAttribute("cy", `${(startY+moveY)/2}`);
-            ellipse.setAttribute("rx", `${Math.abs(moveX-startX)/2}`);
-            ellipse.setAttribute("ry", `${Math.abs(moveY-startY)/2}`);
+            if (moveE.shiftKey){
+                const distance = Math.sqrt(
+                    ((moveX-startX)**2)+
+                    ((moveY-startY)**2)
+                )
+                ellipse.setAttribute("cx", `${(startX+moveX)/2}`);
+                ellipse.setAttribute("cy", `${(startY+moveY)/2}`);
+                ellipse.setAttribute("rx", `${distance/2}`);
+                ellipse.setAttribute("ry", `${distance/2}`);
+            } else {
+                ellipse.setAttribute("cx", `${(startX+moveX)/2}`);
+                ellipse.setAttribute("cy", `${(startY+moveY)/2}`);
+                ellipse.setAttribute("rx", `${Math.abs(moveX-startX)/2}`);
+                ellipse.setAttribute("ry", `${Math.abs(moveY-startY)/2}`);
+            }
         }
 
         function onPointerUp(upE){
