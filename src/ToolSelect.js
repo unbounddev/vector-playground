@@ -50,9 +50,16 @@ export class ToolSelect {
 
         selectContainer.append(menu);
 
-        moreBtn.addEventListener("click", () => {
+        moreBtn.addEventListener("click", (event) => {
             menu.classList.toggle("open");
         })
+
+        document.addEventListener("click", (e) => {
+            if (moreBtn.contains(e.target)) return;
+            if (!menu.contains(e.target) && menu.classList.contains("open")){
+                menu.classList.toggle("open", false);
+            }
+        });
 
         this.addEventListener = this.root.addEventListener.bind();
     }
