@@ -75,6 +75,11 @@ export class Toolbar {
         icon: "/circle.svg",
         label: "Ellipse",
         value: INPUT_MODES.ELLIPSE
+      },
+      {
+        icon: "/slash.svg",
+        label: "Line",
+        value: INPUT_MODES.LINE
       }
     ]
     const shapeSelect = new ToolSelect(shapeOptions);

@@ -48,6 +48,9 @@ export class SVGPanel {
             case INPUT_MODES.ELLIPSE:
                 this.handleEllipse(e);
                 break;
+            case INPUT_MODES.LINE:
+                this.handleLine(e);
+                break;
         }
         
     }
@@ -166,7 +169,42 @@ export class SVGPanel {
         }
 
         function onPointerUp(upE){
+            console.log(upE)
             ellipse.setAttribute("stroke", strokeColor);
+            window.removeEventListener('pointermove', onPointerMove);
+            window.removeEventListener('pointerup', onPointerUp);
+        }
+        
+        window.addEventListener('pointermove', onPointerMove)
+        window.addEventListener('pointerup', onPointerUp)
+    }
+
+    handleLine(e){
+        let startX = e.clientX;
+        let startY = e.clientY;
+        let fillColor = document.documentElement.style.getPropertyValue("--fill-color");
+        let strokeColor = document.documentElement.style.getPropertyValue("--stroke-color");
+        fillColor = fillColor ? fillColor : "none";
+        strokeColor = strokeColor ? strokeColor : "none";
+
+        let line = document.createElementNS(SVG_NS, "line")
+        line.setAttribute("stroke", strokeColor == "none" & fillColor == "none" ? "black" : strokeColor)
+        line.setAttribute("x1", `${startX}`)
+        line.setAttribute("y1", `${startY}`)
+        line.setAttribute("x2", `${startX}`)
+        line.setAttribute("y2", `${startY}`)
+        this.el.append(line)
+
+        function onPointerMove(moveE){
+            let moveX = moveE.clientX;
+            let moveY = moveE.clientY;
+
+            line.setAttribute("x2", `${moveX}`)
+            line.setAttribute("y2", `${moveY}`)
+        }
+
+        function onPointerUp(upE){
+            line.setAttribute("stroke", strokeColor);
             window.removeEventListener('pointermove', onPointerMove);
             window.removeEventListener('pointerup', onPointerUp);
         }
